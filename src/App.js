@@ -1,5 +1,5 @@
 import './App.css';
-import { HomePage } from './components/homepage/homepage.component';
+import { HomePage } from './pages/homepage/homepage.component';
 
 export const App = () => {
   return (
