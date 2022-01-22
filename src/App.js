@@ -1,7 +1,10 @@
 import './App.css';
+import { HomePage } from './components/homepage/homepage.component';
 
-function App() {
-  return <div>Hello World</div>;
-}
-
-export default App;
+export const App = () => {
+  return (
+    <div>
+      <HomePage></HomePage>
+    </div>
+  );
+};
