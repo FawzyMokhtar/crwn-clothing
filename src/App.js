@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import { onSnapshot } from 'firebase/firestore';
 import { connect } from 'react-redux';
 
@@ -15,12 +15,19 @@ class AppComponent extends React.Component {
   unsubscribeFromAuth = null;
 
   render() {
+    const { currentUser } = this.props;
+
     return (
       <div>
         <Header />
         <Routes>
           <Route path='/' element={<HomePage />} />
-          <Route path='/sign-in' element={<SignInAndSignUpPage />} />
+          <Route
+            path='/sign-in'
+            element={
+              currentUser ? <Navigate to='/' /> : <SignInAndSignUpPage />
+            }
+          />
           <Route path='/shop' element={<ShopPage />} />
         </Routes>
       </div>
@@ -48,8 +55,12 @@ class AppComponent extends React.Component {
   }
 }
 
+const mapStateToProps = ({ user }) => ({
+  currentUser: user.currentUser,
+});
+
 const mapDispatchToProps = (dispatch) => ({
   setCurrentUser: (user) => dispatch(setCurrentUser(user)),
 });
 
-export const App = connect(null, mapDispatchToProps)(AppComponent);
+export const App = connect(mapStateToProps, mapDispatchToProps)(AppComponent);
